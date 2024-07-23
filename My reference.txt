@@ -1,0 +1,62 @@
+/////////////////Key Press\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+set wsc = CreateObject("WScript.Shell")
+Do
+  ' one minutes
+  WScript.Sleep(1*60*1000)
+  
+  ' Send F13 key press
+  wsc.Sendkeys("{F13}")
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#To install the Wintrust in multiple servers#
+# List of server names
+$servers = "SPMAPP023"
+
+# Iterate through each server and run the script remotely
+foreach ($server in $servers) {
+    Write-Host "Running script on $server..."
+    Invoke-Command -ComputerName $server -ScriptBlock {
+        # Define the registry modification script
+        $registryPath1 = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Cryptography\wintrust"
+
+        $keyName = "config"
+        $valueName = "Installed"
+        $valueData = "1"
+
+        # Check if the registry key already exists
+        if (-not (Test-Path -Path "$registryPath1\$keyName")) {
+            # Key does not exist, create it
+            New-Item -Path "$registryPath1\$keyName" -Force
+            New-ItemProperty -Path "$registryPath1\$keyName" -Name $valueName -PropertyType DWord -Value $valueData -Force
+            Write-Host "Registry key '$keyName' created on $($env:COMPUTERNAME)."
+        } else {
+            Write-Host "Registry key '$registryPath1''$keyName' already exists on $($env:COMPUTERNAME). No action taken."
+        }
+    }
+}
+
+foreach ($server in $servers) {
+    Write-Host "Running script on $server..."
+    Invoke-Command -ComputerName $server -ScriptBlock {
+        # Define the registry modification script
+        $registryPath2 = "HKLM:\SOFTWARE\Microsoft\Cryptography\wintrust"
+
+        $keyName = "config"
+        $valueName = "Installed"
+        $valueData = "1"
+
+        # Check if the registry key already exists
+        if (-not (Test-Path -Path "$registryPath2\$keyName")) {
+            # Key does not exist, create it
+            New-Item -Path "$registryPath2\$keyName" -Force
+            New-ItemProperty -Path "$registryPath2\$keyName" -Name $valueName -PropertyType DWord -Value $valueData -Force
+            Write-Host "Registry key '$keyName' created on $($env:COMPUTERNAME)."
+        } else {
+            Write-Host "Registry key '$registryPath2''$keyName' already exists on $($env:COMPUTERNAME). No action taken."
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
