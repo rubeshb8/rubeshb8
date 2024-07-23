@@ -1,0 +1,25 @@
+DC validation post roles changes
+
+#To check the DC in current domain 
+ -- Netdom query dc
+#to check the DC roles
+ -- Netdom query fsmo
+#To check the replication summary
+ – repadmin /showrepl ,  -- repadmin /replsummary  , -- repadmin /replsum
+#to diagnose the issue of DC
+--dcdiag
+
+////////////////////////////////////
+Windows time sync cmds
+w32tm /resync
+w32tm /query /status
+w32tm /unregister
+net stop w32time
+w32tm /register
+net start w32timet
+
+//////////////////////////////////////
+#powershell  cmd to set the CET timezone
+--set-TimeZone -Name "W. Europe Standard Time"
+
+//////////////////////////////////////////////////////////////////////////////////////////
