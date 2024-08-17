@@ -1,0 +1,26 @@
+>>>Below steps should be followed from user client machine
+
+1. Open command prompt, execute the below commands -
+
+c:
+cd "C:\Program Files\Amazon Web Services, Inc\Amazon WorkSpaces"
+workspaces.exe -l3
+
+2. Connect the workspace, upon receiving the error, close the client.
+3. Go to folder path %LOCALAPPDATA%\Amazon Web Services\Amazon WorkSpaces\logs and collect the latest logs.
+
+
+
+
+>>>To collect the logs from Workspace machine post user logs are collected
+
+powershell.exe -NoLogo -ExecutionPolicy RemoteSigned -NoProfile -File "C:\Program Files\Amazon\WorkSpacesConfig\Scripts\Get-WorkSpaceLogs.ps1"
+
+
+
+>>>User if he is faccing page reloading issue
+
+goto  >>  Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers
+       
+       then delete  >> Configuration, conectivity , scale factors
+               then reboot the workspace from console 
